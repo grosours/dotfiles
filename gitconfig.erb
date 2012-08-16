@@ -1,20 +1,38 @@
 [user]
 	name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
 	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
-[alias]
-	co = checkout
 [color]
 	diff = auto
 	status = auto
 	branch = auto
 [core]
 	excludesfile = <%= ENV['HOME'] %>/.gitignore
-	editor = mate -w
+	editor = mvim -f
 	autocrlf = input
 [apply]
 	whitespace = nowarn
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
-[github]
-	user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
-	token = <%= print("GitHub API Token: "); STDOUT.flush; STDIN.gets.chomp %>
+[alias]
+	st = status
+	co = checkout
+	ci = commit -s
+	br = branch
+	df = diff
+	cdf = diff --cached
+	lg = log -p
+	ll = log --graph --decorate --pretty=oneline --abbrev-commit
+	lla = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	ls = ls-files
+	pick = add -p
+	bl = blame
+	go = rebase --continue
+	skip = rebase --skip
+	tip = log -1
+	wdf = diff --color-words
+	wcdf = diff --color-words --cached
+	wshow = show --color-words
+	amend = commit -s --amend
+	sd = svn dcommit --add-author-from
+	lsr = ls-remote origin
+	mt = mergetool
