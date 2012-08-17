@@ -1,38 +1,64 @@
+<% 
+    editors = [];
+    editors.push("mate -w") if system %Q{which mate > /dev/null}
+    editors.push("mvim -f") if system %Q{which mvim > /dev/null}
+    editors.push("subl -nw") if system %Q{which subl > /dev/null}
+%>
+
 [user]
-	name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
-	email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+    name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
+    email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+    diff = auto
+    status = auto
+    branch = auto
 [core]
-	excludesfile = <%= ENV['HOME'] %>/.gitignore
-	editor = mvim -f
-	autocrlf = input
+    excludesfile = <%= ENV['HOME'] %>/.gitignore
+    editor = <%= 
+        puts "Which editior ?"
+        index = 1
+        editors.each do |edit| 
+            puts "#{index}. #{edit}"
+            index = index +1 
+        end 
+        puts  "o. Other"
+        
+        resp = STDIN.gets.chomp
+        case resp
+        when /\d+/
+            editors[resp.to_i()-1]
+        when 'o'
+            print "Editor:"; STDOUT.flush; STDIN.gets.chomp
+        else
+            "vim"
+        end
+        %>
+    autocrlf = input
 [apply]
-	whitespace = nowarn
+    whitespace = nowarn
 [format]
-	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
+    pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [alias]
-	st = status
-	co = checkout
-	ci = commit -s
-	br = branch
-	df = diff
-	cdf = diff --cached
-	lg = log -p
-	ll = log --graph --decorate --pretty=oneline --abbrev-commit
-	lla = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	ls = ls-files
-	pick = add -p
-	bl = blame
-	go = rebase --continue
-	skip = rebase --skip
-	tip = log -1
-	wdf = diff --color-words
-	wcdf = diff --color-words --cached
-	wshow = show --color-words
-	amend = commit -s --amend
-	sd = svn dcommit --add-author-from
-	lsr = ls-remote origin
-	mt = mergetool
+    st = status
+    co = checkout
+    ci = commit -s
+    br = branch
+    df = diff
+    cdf = diff --cached
+    lg = log -p
+    ll = log --graph --decorate --pretty=oneline --abbrev-commit
+    lla = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+    pick = add -p
+    bl = blame
+    go = rebase --continue
+    skip = rebase --skip
+    tip = log -1
+    wdf = diff --color-words
+    wcdf = diff --color-words --cached
+    wshow = show --color-words
+    amend = commit -s --amend
+    sd = svn dcommit --add-author-from
+    lsr = ls-remote origin
+    mt = mergetool
+
